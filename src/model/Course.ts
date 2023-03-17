@@ -20,8 +20,10 @@ interface ICourse {
 
 interface IMetaInformation {
     slug: string;
-    skills: string[];
-    courseVideoPreview: ICourseVideoPreview;
+    skills?: string[];
+    courseVideoPreview?: ICourseVideoPreview;
+    fullCourseProductId?: string;
+    fullCourseProductFamily?: string;
 }
 
 interface ICourseVideoPreview {
@@ -30,7 +32,7 @@ interface ICourseVideoPreview {
     previewImageLink: string;
 }
 
-export type CourseResponseData = Omit<ICourse, "lessons" | "containsLockedLessons"> & {
+export type CourseResponseData = Omit<ICourse, "lessons"> & {
     lessonsCount: number;
 };
 

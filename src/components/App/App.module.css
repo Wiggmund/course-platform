@@ -1,6 +1,9 @@
 .container {
   display: flex;
-  justify-content: center;
-  align-items: center;
   flex-direction: column;
+  gap: 50px;
+}
+
+.container > * {
+  flex-grow: 1;
 }
