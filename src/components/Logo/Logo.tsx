@@ -1,6 +1,6 @@
 import {Typography} from '@mui/material';
 
-const Logo = () => {
+export const Logo = () => {
     const logoText = 'CourseMania - the best course platform';
     
     return (
@@ -9,5 +9,3 @@ const Logo = () => {
         </Typography>
     );
 };
-
-export default Logo;

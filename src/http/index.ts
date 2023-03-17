@@ -1,6 +1,6 @@
 import axios from 'axios';
 import InterceptorException from '../exceptions/InterceptorException';
-import AuthService, { AuthResponse } from '../services/AuthService';
+import { AuthResponse, AuthService } from '../services/AuthService';
 
 
 export class ServerApi {

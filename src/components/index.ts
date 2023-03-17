@@ -1,0 +1,7 @@
+export {SearchPanel} from './SearchPanel/SearchPanel'
+export {Logo} from './Logo/Logo'
+export {HashTag} from './HashTag/HashTag'
+export {CourseRating} from './CourseRating/CourseRating'
+export {CourseGallery} from './CourseGallery/CourseGallery'
+export {CourseDuration} from './CourseDuration/CourseDuration'
+export {CourseCard} from './CourseCard/CourseCard'

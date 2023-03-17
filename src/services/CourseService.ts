@@ -1,8 +1,8 @@
 import { AxiosResponse } from "axios";
 import $api from "../http";
-import ICourse, { CourseResponseData } from "../model/Course";
+import { CourseResponseData, ICourse } from "../model";
 
-class CourseService {
+export class CourseService {
     static async getAllCourses(): Promise<AxiosResponse<CourseResponseData[]>> {
         return await $api.get<CourseResponseData[]>(CourseService.getCoursesEndpoint());
     }
@@ -15,6 +15,4 @@ class CourseService {
         return `core/preview-courses`
     }
 }
-
-export default CourseService;
 

@@ -1,4 +1,4 @@
-interface ILesson {
+export interface ILesson {
     id: string;
     title: string;
     duration: number;
@@ -9,5 +9,3 @@ interface ILesson {
     previewImageLink: string;
     meta: null;
 }
-
-export default ILesson;

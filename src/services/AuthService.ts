@@ -4,7 +4,7 @@ export interface AuthResponse {
     token: string;
 }
 
-class AuthService {
+export class AuthService {
     static async authenticate(): Promise<void> {
         const { data } = await $api.get<AuthResponse>(AuthService.getAuthEndpoint());
         localStorage.setItem(AuthService.getLocalStorageTokenKey(), data.token);
@@ -26,5 +26,3 @@ class AuthService {
         }
     }
 }
-
-export default AuthService

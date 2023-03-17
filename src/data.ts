@@ -1,6 +1,6 @@
 import {CourseResponseData} from './model/Course';
 
-export const CourseList: CourseResponseData[] = [
+const CourseList: CourseResponseData[] = [
     {
         "id": "352be3c6-848b-4c19-9e7d-54fe68fef183",
         "title": "Lack of Motivation & How to Overcome It",
@@ -825,3 +825,10 @@ export const CourseList: CourseResponseData[] = [
         }
     }
 ];
+
+const HashTags: string[] = [];
+CourseList.flatMap(course => course.tags).forEach(tag => {
+    if (!HashTags.find(item => item === tag)) HashTags.push(tag);
+});
+
+export { HashTags, CourseList };

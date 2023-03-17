@@ -7,7 +7,7 @@ interface CourseRatingProps {
     rating: number;
 }
 
-const CourseRating = ({
+export const CourseRating = ({
     rating
 }: CourseRatingProps) => {
 
@@ -31,5 +31,3 @@ const CourseRating = ({
         </Grid>
     );
 }
-
-export default CourseRating;

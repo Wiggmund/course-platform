@@ -8,7 +8,7 @@ interface CourseDurationProps {
     minutes: number;
 }
 
-const CourseDuration = ({
+export const CourseDuration = ({
     minutes
 }: CourseDurationProps) => {
     const timeNotation = Util.getHoursAndMinutesFromMinutes(minutes);
@@ -21,5 +21,3 @@ const CourseDuration = ({
         </div>
     );
 };
-
-export default CourseDuration;

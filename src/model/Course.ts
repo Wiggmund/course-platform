@@ -1,6 +1,6 @@
-import ILesson from "./Lesson";
+import {ILesson} from "./Lesson";
 
-interface ICourse {
+export interface ICourse {
     id: string;
     title: string;
     tags: string[];
@@ -36,5 +36,5 @@ export type CourseResponseData = Omit<ICourse, "lessons"> & {
     lessonsCount: number;
 };
 
-export default ICourse;
+
 

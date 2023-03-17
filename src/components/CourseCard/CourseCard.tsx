@@ -1,19 +1,15 @@
-import { CourseList } from "../../data";
+import {ICourse} from "../../model";
 
-interface CourseCardProps {
-    courseId: string;
-}
+type CourseCardProps = Pick<ICourse, 'title' | 'description' | 'duration' | 'rating' | 'tags'>
 
-const CourseCard = ({
-    courseId  
+
+export const CourseCard = ({
+    title,
+    description,
+    duration,
+    rating,
+    tags  
 }: CourseCardProps) => {
-    const course = CourseList.find(course => course.id === courseId);
 
-    if (!course) {
-        return null;
-    }
-
-    return <h2>Course: {course.title}</h2>
+    return <h2>Course: {title}</h2>
 };
-
-export default CourseCard;
