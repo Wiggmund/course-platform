@@ -1,7 +1,13 @@
+import {Typography} from '@mui/material';
+
 const Logo = () => {
     const logoText = 'CourseMania - the best course platform';
     
-    return <h1>{logoText}</h1>;
+    return (
+        <Typography variant="h2" align='center'>
+            {logoText}
+        </Typography>
+    );
 };
 
 export default Logo;

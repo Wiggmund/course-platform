@@ -4,8 +4,9 @@ import TextField from "@mui/material/TextField";
 import { CourseList } from "../../data";
 import Search from '@mui/icons-material/Search';
 import { CourseResponseData } from "../../model/Course";
+import React from "react";
 
-const SearchPanel = () => { 
+const SearchPanel = () => {
     const filterOptions = createFilterOptions({
         matchFrom: 'start',
         stringify: (option: CourseResponseData) => option.title,
@@ -28,13 +29,18 @@ const SearchPanel = () => {
         />
     );
 
+    const getOptionLabel = (option: string | CourseResponseData) => {
+        if (typeof option === 'string') return option;
+
+        return option.title;
+    };
+
     const searchInput = <Autocomplete
         freeSolo
         id="search-panel"
         disableClearable
         options={CourseList.sort((a, b) => -b.title.charAt(0).localeCompare(a.title.charAt(0)))}
-        // TODO: Fix typing
-        getOptionLabel={(option) => (option as CourseResponseData).title}
+        getOptionLabel={getOptionLabel}
         groupBy={(option) => option.title.charAt(0)}
         filterOptions={filterOptions}
         renderInput={renderInput}
