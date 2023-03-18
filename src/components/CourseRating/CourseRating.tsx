@@ -1,5 +1,5 @@
 import StarOutlinedIcon from '@mui/icons-material/StarOutlined';
-import {Typography} from '@mui/material'
+import {Stack, Typography} from '@mui/material'
 import CustomColors from '../../miu/CustomColors';
 import Grid from '@mui/material/Grid';
 
@@ -21,13 +21,13 @@ export const CourseRating = ({
 
 
     return (
-        <Grid container spacing={2}>
-            <Grid>
-                <StarOutlinedIcon sx={{color: `${defineIconColor(rating)}`}}/>
-            </Grid>
-            <Grid>
-                <Typography>{rating}</Typography>
-            </Grid>
-        </Grid>
+        <Stack
+            direction={'row'}
+            alignItems={'center'}
+            gap={1}
+        >
+            <StarOutlinedIcon sx={{color: `${defineIconColor(rating)}`}}/>
+            <Typography>{rating}</Typography>
+        </Stack>
     );
 }

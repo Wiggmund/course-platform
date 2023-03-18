@@ -1,11 +1,22 @@
 import { useEffect } from "react";
 import {AuthService} from "../../services";
-import Grid from '@mui/material/Grid'
 import {Logo} from "../../components";
 import {SearchPanel} from "../../components";
 import {HashTag} from "../../components";
 import { HashTags } from "../../data";
 import {CourseGallery} from "../../components";
+import { Stack, styled } from "@mui/material";
+import Container from "@mui/material/Container";
+
+
+const HeaderContainer = styled(Container)({
+    component: "header"
+});
+
+const MainContainer = styled(Container)({
+    component: "main"
+});
+
 
 const Home = () => {
     useEffect(() => {
@@ -16,26 +27,31 @@ const Home = () => {
         initialAuthentication();
     }, []);
 
-    return (
-        <>
-            <Grid container padding={5} spacing={5}>
-                <Grid item xs={12}>
-                    <Logo />
-                </Grid>
-                <Grid item container xs={12} justifyContent={'center'} alignItems={'center'} spacing={2}>
-                    {HashTags.map(tag => (
-                        <Grid item key={tag}>
-                            <HashTag text={tag}/>
-                        </Grid>
-                    ))}
-                </Grid>
-                <Grid item xs={12}>
-                    <SearchPanel />
-                </Grid>
-            </Grid>
-            <CourseGallery />
-        </>
+    const hashTags = HashTags.map((tag, index) => (
+            <HashTag text={tag} key={`${tag}-${index}`}/>
+        )
+    );
 
+    return (
+        <Container maxWidth="xl">
+            <HeaderContainer maxWidth="xl">
+                <Stack spacing={3} marginBottom={4}>
+                    <Logo />
+                    <Stack
+                        direction={'row'}
+                        gap={1}
+                        justifyContent={'center'}
+                        alignContent={'center'}
+                        alignItems={'center'}
+                        flexWrap={'wrap'}
+                    >{hashTags}</Stack>
+                    <SearchPanel />
+                </Stack>
+            </HeaderContainer>
+            <MainContainer maxWidth="xl">
+                <CourseGallery />
+            </MainContainer>
+        </Container>
     );
 };
 

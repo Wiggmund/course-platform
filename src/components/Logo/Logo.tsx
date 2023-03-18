@@ -1,11 +1,16 @@
-import {Typography} from '@mui/material';
+import {Typography, Box} from '@mui/material';
 
 export const Logo = () => {
     const logoText = 'CourseMania - the best course platform';
     
     return (
-        <Typography variant="h2" align='center'>
-            {logoText}
+        <Typography component='div' >
+            <Box
+                sx={{
+                    typography: {ss: 'h5',xs: 'h4', sm: 'h1'},
+                    textAlign: 'center'
+                }}
+            >{logoText}</Box>
         </Typography>
     );
 };

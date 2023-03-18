@@ -1,7 +1,14 @@
+interface CourseDurationString {
+    hours?: string;
+    minutes?: string;
+}
+
 class Util {
-    static getHoursAndMinutesFromMinutes(minutes: number): string {
+    static getHoursAndMinutesFromMinutes(minutes: number): CourseDurationString {
+
+        
         if (!minutes) {
-            return `0 hours 0 minutes`;
+            return {};
         }
         
         let hours = Math.floor(minutes / 60);
@@ -11,7 +18,10 @@ class Util {
         let hourStringNotation = `${hours} ${hours === 1 ? 'hour' : 'hours'}`;
         let minuteStringNotation = `${leftMinutes} ${leftMinutes === 1 ? 'minute' : 'minutes'}`;
 
-        return `${hours ? hourStringNotation : ''} ${leftMinutes ? minuteStringNotation : ''}`;
+        return {
+            hours: hours ? hourStringNotation : undefined,
+            minutes: leftMinutes ? minuteStringNotation : undefined
+        }
     }
 }
 
