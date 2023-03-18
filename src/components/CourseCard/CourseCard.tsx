@@ -1,47 +1,70 @@
 import {ICourse} from "../../model";
-
 import Card from '@mui/material/Card';
 import Typography from '@mui/material/Typography';
 import { Button, Stack } from '@mui/material';
-import { CourseDuration } from "../CourseDuration/CourseDuration";
+import { Duration } from "../Duration/Duration";
 import { Box } from "@mui/material";
 import { CourseRating } from "../CourseRating/CourseRating";
 import MainTheme from "../../miu/MainTheme";
+import { HashTags } from "../HashTags/HashTags";
 
-type CourseCardProps = Pick<ICourse, 'title' | 'description' | 'duration' | 'rating' | 'tags'>
+type CourseCardProps = Pick<ICourse, 'title' | 'description' | 'duration' | 'rating' | 'tags' | 'previewImageLink'>
 
-let counter = 1;
 export const CourseCard = ({
     title,
     description,
     duration,
     rating,
-    tags  
+    tags,
+    previewImageLink
 }: CourseCardProps) => {
-    const link = `https://source.unsplash.com/random/200x200?sig=${counter++}`;
+    const preview = `${previewImageLink}/cover.webp`;
     
-    const tagItems = tags.map((tag, index) => (
-        <Typography
-            variant="caption" 
-            key={`${tag}-${index}`}
-        >
-            {`#${tag}`}
-        </Typography>
-    ));
 
-    const tagsBlock = (
-        <Stack direction={'row'} gap={1}>
-            {tagItems}
+    const cardBottom = (
+        <Stack
+            direction='row'
+            alignItems='center'
+            justifyContent='space-between'
+            gap={1}
+            sx={{
+                [MainTheme.breakpoints.down('xs')]: {
+                    flexDirection: 'column',
+                    gap: 2
+                },
+            }}
+        >
+            <Button variant='contained' size="small" color="primary"
+                sx={{
+                    [MainTheme.breakpoints.down('xs')]: {
+                        order: 1
+                    },
+                }}
+            >
+                More
+            </Button>
+            <Duration duration={duration} />
+            <CourseRating rating={rating} />
         </Stack>
     );
-    
+
+    const cardTextContent = (
+        <Box>
+            <Typography variant="h6">{title}</Typography>
+            <HashTags tags={tags}/>
+            <Typography variant="body2">{description}</Typography>
+        </Box>
+    );
+
+    const cardImage = (<Box component='img' src={preview} alt={title} height={'400px'}/>);
+
     return (
         <Card
             component={Stack}
             spacing={2}
             height={'100%'}
         >
-            <Box component='img' src={link} alt={title}></Box>
+            {cardImage}
             <Stack
                 paddingLeft={2}
                 paddingRight={2}
@@ -50,33 +73,8 @@ export const CourseCard = ({
                 spacing={2}
                 flex={1}
             >
-                <Box>
-                    <Typography variant="h6">{title}</Typography>
-                    {tagsBlock}
-                    <Typography variant="body2">{description}</Typography>
-                </Box>
-                <Stack
-                    direction='row'
-                    alignItems='center'
-                    justifyContent='space-between'
-                    gap={1}
-                    sx={{
-                        [MainTheme.breakpoints.down('xs')]: {
-                            flexDirection: 'column',
-                            gap: 2
-                        },
-                    }}
-                >
-                    <Button variant='contained' size="small" color="primary"
-                        sx={{
-                            [MainTheme.breakpoints.down('xs')]: {
-                                order: 1
-                            },
-                        }}
-                    >More</Button>
-                    <CourseDuration duration={duration} />
-                    <CourseRating rating={rating} />
-                </Stack>
+                {cardTextContent}
+                {cardBottom}  
             </Stack>
         </Card>
     );

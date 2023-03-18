@@ -1,3 +1,4 @@
+import { ILesson } from './model';
 import {CourseResponseData} from './model/Course';
 
 const CourseList: CourseResponseData[] = [
@@ -832,3 +833,41 @@ CourseList.flatMap(course => course.tags).forEach(tag => {
 });
 
 export { HashTags, CourseList };
+
+
+
+export const LessonsList: ILesson[] = [
+    {
+        id: 'Test lesson for testing purposes',
+        title: 'Test lesson for testing purposes',
+        duration: 24,
+        order: 1,
+        type: 'video',
+        status: 'locked',
+        link: 'https://source.unsplash.com/random/200x200?sig=1',
+        previewImageLink: 'https://source.unsplash.com/random/200x200?sig=1',
+        meta: null
+    },
+    {
+        id: 'Test lesson for testing purposes',
+        title: 'Test lesson for testing purposes',
+        duration: 45,
+        order: 2,
+        type: 'video',
+        status: 'locked',
+        link: 'https://source.unsplash.com/random/200x200?sig=1',
+        previewImageLink: 'https://source.unsplash.com/random/200x200?sig=2',
+        meta: null
+    },
+    {
+        id: 'Test lesson for testing purposes',
+        title: 'Test lesson for testing purposes',
+        duration: 68,
+        order: 3,
+        type: 'video',
+        status: 'locked',
+        link: 'https://source.unsplash.com/random/200x200?sig=1',
+        previewImageLink: 'https://source.unsplash.com/random/200x200?sig=3',
+        meta: null
+    }
+];

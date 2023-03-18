@@ -1,35 +1,42 @@
 import Util from "../../utils/Util";
 import AccessTimeOutlinedIcon from '@mui/icons-material/AccessTimeOutlined';
-import {Stack, Typography} from '@mui/material'
-import Divider from "@mui/material/Divider/Divider";
+import {Stack, Typography} from '@mui/material';
 import MainTheme from "../../miu/MainTheme";
+import Box from "@mui/material/Box";
+
 
 interface CourseDurationProps {
     duration: number;
 }
 
-export const CourseDuration = ({
+export const Duration = ({
     duration
 }: CourseDurationProps) => {
     const {hours, minutes} = Util.getHoursAndMinutesFromMinutes(duration);
 
+
+    const DurationTitle = (content: string) => (
+        <Typography component='div' >
+            <Box
+                sx={{
+                    typography: {xs: 'caption', sm: 'body1', xl: 'h6'}
+                }}
+            >{content}</Box>
+        </Typography>
+    );
+
+    // We always have hours if we have minutes >= 60, so we use '!'
     const time = !hours || !minutes
-        ? <Typography variant="caption">{hours ? hours : minutes}</Typography>
+        ? (hours ? DurationTitle(hours) : DurationTitle(minutes!))
         : <Stack sx={{
             [MainTheme.breakpoints.up('lg')]: {
                 flexDirection: 'row',
                 gap: 0.5
             },
         }}>
-            <Typography variant="caption">{hours}</Typography>
-            <Divider sx={{
-                [MainTheme.breakpoints.up('lg')]: {
-                    display: 'none'
-                },
-            }}/>
-            <Typography variant="caption">{minutes}</Typography>
+            {DurationTitle(hours)}
+            {DurationTitle(minutes)}
         </Stack>
-
 
     return (
         <Stack

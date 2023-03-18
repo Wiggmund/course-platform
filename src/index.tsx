@@ -6,6 +6,7 @@ import {ThemeProvider} from '@mui/material'
 import MainTheme from './miu/MainTheme';
 import CssBaseline from '@mui/material/CssBaseline';
 import Home from './pages/Home/Home';
+import CoursePage from './pages/Home/CoursePage';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
@@ -14,7 +15,7 @@ root.render(
   <React.StrictMode>
     <CssBaseline />
     <ThemeProvider theme={MainTheme}>
-      <Home />
+      <CoursePage />
     </ThemeProvider>
   </React.StrictMode>
 );
