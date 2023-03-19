@@ -1,10 +1,10 @@
 import { useEffect } from "react";
-import {AuthService} from "../../services";
-import {Logo} from "../../components";
-import {SearchPanel} from "../../components";
-import {HashTags} from "../../components";
-import { HashTags as tags } from "../../data";
-import {CourseCardList} from "../../components";
+import {AuthService} from "../services";
+import {Logo} from "../components";
+import {SearchPanel} from "../components";
+import {HashTags} from "../components";
+import { HashTags as tags } from "../data";
+import {CourseCardList} from "../components";
 import { Stack, styled } from "@mui/material";
 import Container from "@mui/material/Container";
 
@@ -14,7 +14,8 @@ export const HeaderContainer = styled(Container)({
 });
 
 export const MainContainer = styled(Container)({
-    component: "main"
+    component: "main",
+    marginTop: '40px'
 });
 
 

@@ -5,18 +5,18 @@ import reportWebVitals from './reportWebVitals';
 import {ThemeProvider} from '@mui/material'
 import {MainTheme} from './miu';
 import CssBaseline from '@mui/material/CssBaseline';
-import Home from './pages/Home/Home';
-import CoursePage from './pages/Home/CoursePage';
+import { RouterProvider } from 'react-router-dom';
+import {RootRouter} from './routes'
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
 root.render(
   <React.StrictMode>
-    <CssBaseline />
-    <ThemeProvider theme={MainTheme}>
-      <CoursePage />
-    </ThemeProvider>
+      <CssBaseline />
+      <ThemeProvider theme={MainTheme}>
+        <RouterProvider router={RootRouter} />
+      </ThemeProvider>
   </React.StrictMode>
 );
 

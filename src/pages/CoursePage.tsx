@@ -3,13 +3,13 @@ import Container from "@mui/material/Container";
 import Grid from "@mui/material/Grid";
 import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
-import { Duration, CourseInfo, CourseRating, CourseStatus, HashTags, LessonCard, SkillsBlock } from "../../components";
-import { CourseList, LessonsList } from "../../data";
+import { Duration, CourseInfo, CourseRating, CourseStatus, HashTags, LessonCard, SkillsBlock } from "../components";
+import { CourseList, LessonsList } from "../data";
 import { HeaderContainer, MainContainer } from "./Home";
 import IconButton from "@mui/material/IconButton";
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
-import {blue} from '@mui/material/colors'
-import { MainTheme } from "../../miu";
+import { MainTheme } from "../miu";
+import { Link } from "react-router-dom";
 
 const CoursePage = () => {
     const course = CourseList[0];     
@@ -33,21 +33,32 @@ const CoursePage = () => {
                 }
             }}
         >
-            <IconButton aria-label="back">
-                <ArrowBackIcon 
-                    color='info'
-                    sx={{ fontSize: {ss: '1.5em', xs: '2em'}}}
-                />
-            </IconButton>
+            <Link to={'/'}>
+                <IconButton aria-label="back">
+                    <ArrowBackIcon 
+                        color='info'
+                        sx={{ fontSize: {ss: '1.5em', xs: '2em'}}}
+                    />
+                </IconButton>
+            </Link>
             <CourseStatus />
         </Stack>
     );
 
     const headerTextContent = (
-        <Stack gap={4}>
+        <Stack gap={4} p={2}>
             {StatusBar}
             <Box>
-                <Typography variant='h3'>{course.title}</Typography>
+                <Typography
+                    variant='h3'
+                    sx={{
+                        [MainTheme.breakpoints.down('lg')]: {
+                            typography: 'h4'
+                        }
+                    }}
+                >
+                    {course.title}
+                </Typography>
                 <Box marginTop={2}>
                     <HashTags tags={course.tags}/>
                 </Box>
@@ -66,7 +77,7 @@ const CoursePage = () => {
     return (
         <Container maxWidth="xl">
             <HeaderContainer maxWidth="xl">
-                <Grid container p={2} alignItems='center'>
+                <Grid container alignItems='center'>
                     <Grid item xs={12} md={4}>
                         {headerTextContent}
                     </Grid>

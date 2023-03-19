@@ -8,6 +8,7 @@ import Box from "@mui/material/Box";
 import CourseRating from "../CourseRating/CourseRating";
 import {MainTheme} from "../../miu";
 import HashTags from "../HashTags/HashTags";
+import { Link } from "react-router-dom";
 
 type CourseCardProps = Pick<ICourse, 'title' | 'description' | 'duration' | 'rating' | 'tags' | 'previewImageLink'>
 
@@ -35,15 +36,17 @@ const CourseCard = ({
                 },
             }}
         >
-            <Button variant='contained' size="small" color="primary"
-                sx={{
-                    [MainTheme.breakpoints.down('xs')]: {
-                        order: 1
-                    },
-                }}
-            >
-                More
-            </Button>
+            <Link to={'course/1'}>
+                <Button variant='contained' size="small" color="primary"
+                    sx={{
+                        [MainTheme.breakpoints.down('xs')]: {
+                            order: 1
+                        },
+                    }}
+                >
+                    More
+                </Button>
+            </Link>
             <Duration duration={duration} />
             <CourseRating rating={rating} />
         </Stack>
