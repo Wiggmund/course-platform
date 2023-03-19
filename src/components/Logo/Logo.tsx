@@ -1,6 +1,7 @@
-import {Typography, Box} from '@mui/material';
+import Typography from "@mui/material/Typography";
+import Box from "@mui/material/Box";
 
-export const Logo = () => {
+const Logo = () => {
     const logoText = 'CourseMania - the best course platform';
     
     return (
@@ -14,3 +15,5 @@ export const Logo = () => {
         </Typography>
     );
 };
+
+export default Logo;

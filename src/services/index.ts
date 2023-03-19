@@ -1,2 +1,2 @@
-export {type AuthResponse, AuthService} from './AuthService'
-export {CourseService} from './CourseService'
+export {default as AuthService, type AuthResponse} from './AuthService'
+export {default as CourseService} from './CourseService'

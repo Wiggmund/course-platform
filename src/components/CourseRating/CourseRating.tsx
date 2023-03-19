@@ -1,13 +1,13 @@
 import StarOutlinedIcon from '@mui/icons-material/StarOutlined';
-import {Stack, Typography} from '@mui/material'
+import Stack from '@mui/material/Stack'
+import Typography from '@mui/material/Typography'
 import CustomColors from '../../miu/CustomColors';
-import Grid from '@mui/material/Grid';
 
 interface CourseRatingProps {
     rating: number;
 }
 
-export const CourseRating = ({
+const CourseRating = ({
     rating
 }: CourseRatingProps) => {
 
@@ -31,3 +31,5 @@ export const CourseRating = ({
         </Stack>
     );
 }
+
+export default CourseRating;

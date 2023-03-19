@@ -3,14 +3,14 @@ import Typography from "@mui/material/Typography";
 import Stack from "@mui/material/Stack";
 import Box from "@mui/material/Box";
 import CheckIcon from '@mui/icons-material/Check';
-import { Divider, Paper } from "@mui/material";
-
+import Divider from "@mui/material/Divider";
+import Paper from "@mui/material/Paper";
 
 interface SkillsBlockProps {
     skills: string[];
 }
 
-export const SkillsBlock = ({
+const SkillsBlock = ({
     skills
 }: SkillsBlockProps) => {
 
@@ -39,3 +39,5 @@ export const SkillsBlock = ({
         </Paper>
     );
 };
+
+export default SkillsBlock;

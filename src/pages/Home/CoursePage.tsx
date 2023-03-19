@@ -3,7 +3,7 @@ import Container from "@mui/material/Container";
 import Grid from "@mui/material/Grid";
 import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
-import { CourseDuration, CourseInfo, CourseRating, CourseStatus, HashTags, LessonCard, SkillsBlock } from "../../components";
+import { Duration, CourseInfo, CourseRating, CourseStatus, HashTags, LessonCard, SkillsBlock } from "../../components";
 import { CourseList, LessonsList } from "../../data";
 import { HeaderContainer, MainContainer } from "./Home";
 
@@ -27,7 +27,7 @@ const CoursePage = () => {
 
                 <Stack gap={2} marginTop={2}>
                     <Stack direction='row' justifyContent='space-between'>
-                        <CourseDuration duration={course.duration}/>
+                        <Duration duration={course.duration}/>
                         <CourseRating rating={course.rating}/>
                     </Stack>
                     <Typography variant='h5'>{course.description}</Typography>

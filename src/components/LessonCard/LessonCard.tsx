@@ -1,13 +1,14 @@
 import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
+import Box from "@mui/material/Box";
 import {blue} from "@mui/material/colors";
 import EnhancedEncryptionIcon from '@mui/icons-material/EnhancedEncryption';
 import Button from "@mui/material/Button";
-import { Duration } from "../Duration/Duration";
-import {useState} from 'react'
+import Duration from "../Duration/Duration";
 import { ILesson } from "../../model";
-import { Box, Paper } from "@mui/material";
-import MainTheme from "../../miu/MainTheme";
+import Paper from "@mui/material/Paper";
+import {MainTheme} from "../../miu";
+import {useState} from 'react';
 
 
 interface LessonCardProps {
@@ -16,7 +17,7 @@ interface LessonCardProps {
 }
 
 
-export const LessonCard = ({lesson, isLast }: LessonCardProps) => {
+const LessonCard = ({lesson, isLast }: LessonCardProps) => {
     const {title, previewImageLink: link, duration, order, status} = lesson;
     const [locked, setLocked] = useState(status);
 
@@ -48,7 +49,8 @@ export const LessonCard = ({lesson, isLast }: LessonCardProps) => {
         <Stack sx={{
             alignItems: 'center',
             justifyContent: 'center',
-            height: `calc(110%)`,
+            // below MD-breaking point, there wasn't enough 100% length
+            height: `calc(102%)`,
             width: 5,
             backgroundColor: blue[600],
             flexGrow: 1,
@@ -158,3 +160,5 @@ export const LessonCard = ({lesson, isLast }: LessonCardProps) => {
 
     );
 };
+
+export default LessonCard;

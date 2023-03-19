@@ -1,8 +1,8 @@
 import { CourseList } from "../../data";
 import Grid from '@mui/material/Grid'
-import { CourseCard } from "../CourseCard/CourseCard";
+import CourseCard from "../CourseCard/CourseCard";
 
-export const CourseGallery = () => {
+const CourseCardList = () => {
     const courses = CourseList.slice(0, 5);
 
 
@@ -16,3 +16,5 @@ export const CourseGallery = () => {
         </Grid>
     );
 };
+
+export default CourseCardList;

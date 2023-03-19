@@ -1,7 +1,6 @@
 import axios from 'axios';
-import InterceptorException from '../exceptions/InterceptorException';
-import { AuthResponse, AuthService } from '../services/AuthService';
-
+import {InterceptorException} from '../exceptions';
+import { AuthResponse, AuthService } from '../services';
 
 export class ServerApi {
     static getBaseUrl = () => {
@@ -12,7 +11,6 @@ export class ServerApi {
     };
 }
 
-
 const $api = axios.create({
     baseURL: ServerApi.getBaseUrl(),
     withCredentials: true,
@@ -22,7 +20,7 @@ const $api = axios.create({
 });
 
 $api.interceptors.request.use((config) => {
-    const token = `Bearer ${localStorage.getItem(AuthService.getLocalStorageTokenKey())}`;
+    const token = `Bearer ${localStorage.getItem(AuthService.tokenLocalStorageKey)}`;
     config.headers.Authorization = token;
     return config;
 });
@@ -34,15 +32,13 @@ $api.interceptors.response.use(response => {
     if (error.response.status === 401 && !error.config._isRetry) {
         try {
             originalRequest._isRetry = true;
-            const response = await axios.get<AuthResponse>(`${ServerApi.getBaseUrl()}/${AuthService.getAuthEndpoint()}`);
-            localStorage.setItem(AuthService.getLocalStorageTokenKey(), response.data.token);
+            const response = await axios.get<AuthResponse>(`${ServerApi.getBaseUrl()}/${AuthService.authEndpoint}`);
+            localStorage.setItem(AuthService.tokenLocalStorageKey, response.data.token);
             return $api.request(originalRequest);
         } catch(err) {
             throw new InterceptorException('response');
         }
     }
 });
-
-
 
 export default $api;

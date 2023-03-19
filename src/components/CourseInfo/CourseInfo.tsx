@@ -16,7 +16,7 @@ const TextRowHeader = styled(TextRow)({
     fontWeight: 700
 });
 
-export const CourseInfo = ({
+const CourseInfo = ({
     launchDate,
     lessonsCount
 }: CourseInfoProps) => {
@@ -36,3 +36,5 @@ export const CourseInfo = ({
         </Paper>
     );
 };
+
+export default CourseInfo;

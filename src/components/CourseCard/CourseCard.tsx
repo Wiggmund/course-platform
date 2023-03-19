@@ -1,16 +1,17 @@
 import {ICourse} from "../../model";
 import Card from '@mui/material/Card';
 import Typography from '@mui/material/Typography';
-import { Button, Stack } from '@mui/material';
-import { Duration } from "../Duration/Duration";
-import { Box } from "@mui/material";
-import { CourseRating } from "../CourseRating/CourseRating";
-import MainTheme from "../../miu/MainTheme";
-import { HashTags } from "../HashTags/HashTags";
+import Button from "@mui/material/Button";
+import Stack from "@mui/material/Stack";
+import Duration from "../Duration/Duration";
+import Box from "@mui/material/Box";
+import CourseRating from "../CourseRating/CourseRating";
+import {MainTheme} from "../../miu";
+import HashTags from "../HashTags/HashTags";
 
 type CourseCardProps = Pick<ICourse, 'title' | 'description' | 'duration' | 'rating' | 'tags' | 'previewImageLink'>
 
-export const CourseCard = ({
+const CourseCard = ({
     title,
     description,
     duration,
@@ -79,3 +80,5 @@ export const CourseCard = ({
         </Card>
     );
 };
+
+export default CourseCard;

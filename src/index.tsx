@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import reportWebVitals from './reportWebVitals';
 import {ThemeProvider} from '@mui/material'
-import MainTheme from './miu/MainTheme';
+import {MainTheme} from './miu';
 import CssBaseline from '@mui/material/CssBaseline';
 import Home from './pages/Home/Home';
 import CoursePage from './pages/Home/CoursePage';
@@ -15,7 +15,7 @@ root.render(
   <React.StrictMode>
     <CssBaseline />
     <ThemeProvider theme={MainTheme}>
-      <CoursePage />
+      <Home />
     </ThemeProvider>
   </React.StrictMode>
 );

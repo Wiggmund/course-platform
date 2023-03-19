@@ -1,17 +1,18 @@
-import Util from "../../utils/Util";
+import {Util} from "../../utils";
 import AccessTimeOutlinedIcon from '@mui/icons-material/AccessTimeOutlined';
-import {Stack, Typography} from '@mui/material';
-import MainTheme from "../../miu/MainTheme";
+import Typography from '@mui/material/Typography';
+import Stack from '@mui/material/Stack';
+import {MainTheme} from "../../miu";
 import Box from "@mui/material/Box";
 
 
-interface CourseDurationProps {
+interface DurationProps {
     duration: number;
 }
 
-export const Duration = ({
+const Duration = ({
     duration
-}: CourseDurationProps) => {
+}: DurationProps) => {
     const {hours, minutes} = Util.getHoursAndMinutesFromMinutes(duration);
 
 
@@ -25,8 +26,8 @@ export const Duration = ({
         </Typography>
     );
 
-    // We always have hours if we have minutes >= 60, so we use '!'
     const time = !hours || !minutes
+        // Here we can't have minutes undefined, so we use '!assertion' 
         ? (hours ? DurationTitle(hours) : DurationTitle(minutes!))
         : <Stack sx={{
             [MainTheme.breakpoints.up('lg')]: {
@@ -49,3 +50,5 @@ export const Duration = ({
         </Stack>
     );
 };
+
+export default Duration;

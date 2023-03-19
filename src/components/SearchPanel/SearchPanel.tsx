@@ -6,7 +6,7 @@ import Search from '@mui/icons-material/Search';
 import { CourseResponseData } from "../../model/Course";
 import React from "react";
 
-export const SearchPanel = () => {
+const SearchPanel = () => {
     const filterOptions = createFilterOptions({
         matchFrom: 'start',
         stringify: (option: CourseResponseData) => option.title,
@@ -55,3 +55,5 @@ export const SearchPanel = () => {
 
     return searchInput;
 };
+
+export default SearchPanel;

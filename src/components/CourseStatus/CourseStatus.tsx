@@ -1,10 +1,11 @@
-import {Typography, Stack} from '@mui/material'
+import Typography from '@mui/material/Typography';
+import Stack from '@mui/material/Stack';
 import {green, red, } from '@mui/material/colors'
-import MainTheme from '../../miu/MainTheme';
+import {MainTheme} from '../../miu';
 
 type Status = 'lunched' | 'closed';
 
-export const CourseStatus = () => {
+const CourseStatus = () => {
     const status: Status = 'lunched';
     
     return (
@@ -26,3 +27,5 @@ export const CourseStatus = () => {
         </Stack>
     );
 };
+
+export default CourseStatus;

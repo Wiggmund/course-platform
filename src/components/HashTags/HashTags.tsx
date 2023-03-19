@@ -5,7 +5,7 @@ interface HashTagProps {
     tags: string[];
 }
 
-export const HashTags = ({tags}: HashTagProps) => {
+const HashTags = ({tags}: HashTagProps) => {
     const tagItems = tags.map((tag, index) => (
             <Typography
                 sx={{typography: {xs: 'body2', sm: 'body1'}}} 
@@ -29,3 +29,5 @@ export const HashTags = ({tags}: HashTagProps) => {
         </Stack>
     );
 };
+
+export default HashTags;
