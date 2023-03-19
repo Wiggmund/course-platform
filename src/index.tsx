@@ -15,7 +15,7 @@ root.render(
   <React.StrictMode>
     <CssBaseline />
     <ThemeProvider theme={MainTheme}>
-      <Home />
+      <CoursePage />
     </ThemeProvider>
   </React.StrictMode>
 );
