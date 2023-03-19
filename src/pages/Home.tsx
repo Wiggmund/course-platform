@@ -1,13 +1,12 @@
 import { useEffect } from "react";
-import {AuthService} from "../services";
+import {AuthService, CourseService} from "../services";
 import {Logo} from "../components";
 import {SearchPanel} from "../components";
 import {HashTags} from "../components";
-import { HashTags as tags } from "../data";
 import {CourseCardList} from "../components";
 import { Stack, styled } from "@mui/material";
 import Container from "@mui/material/Container";
-
+import {useState} from 'react';
 
 export const HeaderContainer = styled(Container)({
     component: "header",
@@ -22,15 +21,23 @@ export const MainContainer = styled(Container)({
 
 
 const Home = () => {
+    const [tags, setTags] = useState<string[]>([]);
+
     useEffect(() => {
         async function initialAuthentication() {
             await AuthService.checkAuth();
         }
 
+        async function loadData() {
+            await CourseService.getAllCourses(1);
+            setTags(CourseService.getAllHashtags());
+        }
+
         initialAuthentication();
+        loadData();
     }, []);
 
-    
+
 
     return (
         <Container maxWidth="xl" sx={{p: 4}}>

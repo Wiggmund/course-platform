@@ -14,13 +14,15 @@ class CourseService {
     static lessonPreviewLinkEnding = '.webp';
     static pagesCount: number = -1;
     static perPage = 10;
+    static coursesList: CourseResponseData[];
 
     static async getAllCourses(page: number): Promise<CourseResponseData[]> {
         const perPage = CourseService.perPage;
         const response = await $api.get<Response>(CourseService.coursesEndpoint);
         const courses = response.data.courses;
+        CourseService.coursesList = courses;
+
         CourseService.pagesCount = Math.ceil(courses.length / perPage);
-        
         const coursesByPage: Map<number, CourseResponseData[]> = new Map();
         splitCoursesByPage();
 
@@ -53,6 +55,19 @@ class CourseService {
 
     static async getCourseById(courseId: string): Promise<AxiosResponse<ICourse>> {
         return await $api.get<ICourse>(`${CourseService.coursesEndpoint}/${courseId}`);
+    }
+
+    static getAllHashtags(): string[] {
+        if (!CourseService.coursesList) return [];
+        
+        const result: string[] = [];
+        CourseService.coursesList
+            .flatMap(course => course.tags)
+            .forEach(tag => {
+                if (!result.find(item => item === tag)) result.push(tag);
+            });
+        
+        return result;
     }
 }
 export default CourseService;
