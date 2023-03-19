@@ -9,6 +9,7 @@ import { ILesson } from "../../model";
 import Paper from "@mui/material/Paper";
 import {MainTheme} from "../../miu";
 import { CourseService } from "../../services";
+import Hls from "hls.js";
 
 interface LessonCardProps {
     lesson: ILesson,
@@ -17,9 +18,11 @@ interface LessonCardProps {
 
 
 const LessonCard = ({lesson, isLast }: LessonCardProps) => {
-    const {title, duration, order, status} = lesson;
-    const link = `${lesson.previewImageLink}/lesson-${order}${CourseService.lessonPreviewLinkEnding}`;
+    const {title, duration, order, status, id} = lesson;
+    const imagePreviewLink = `${lesson.previewImageLink}/lesson-${order}${CourseService.lessonPreviewLinkEnding}`;
+    const videoLink = lesson.link;
     const locked = status === 'locked' ? true : false;
+    let hls: Hls;
 
     const LessonTitle = (
         <Typography component='div' >
@@ -88,25 +91,70 @@ const LessonCard = ({lesson, isLast }: LessonCardProps) => {
         </Stack>
     );
 
-    const LessonPreview = (
-        <Stack 
-            component='img'
-            maxHeight='100%'
-            maxWidth='100%'
-            src={link} 
-            alt={title}
-            sx={{
-                weight: {xs: '100%', sm: 250, md: 350, lg: 700},
-                width: {xs: '100%', sm: 280, md: 350, lg: 700}
-            }} 
-        ></Stack> 
-    );
+    const lessonVideoPreviewElementId = id;
+    const video = document.getElementById(lessonVideoPreviewElementId) as HTMLMediaElement;
+    if (Hls.isSupported() && !locked && video) {
+        hls = new Hls();
+        hls.loadSource(videoLink);
+        hls.attachMedia(video);
+        hls.on(Hls.Events.MANIFEST_PARSED, function() {
+            console.log('Lesson video loaded')
+        });
+        hls.config.autoStartLoad = false;
+    }
+
+    const startVideo = () => {
+        hls.startLoad(-1);
+        video.play();
+    };
+
+    const stopVideo = () => {
+        hls.stopLoad();
+        video.pause();
+    };
+
+    const mediaBlock = !locked
+        ?   (
+                <Stack
+                    alignItems='center'
+                    justifyContent='center'
+                    component='video'
+
+                    id={id}
+                    controls={!locked}
+                    src={videoLink}
+                    poster={imagePreviewLink}
+                    muted
+
+                    onPlay={startVideo}
+                    onMouseOver={startVideo}
+                    onMouseLeave={stopVideo}
+
+                    sx={{
+                        weight: {xs: '100%', sm: 250, md: 350, lg: 700},
+                        width: {xs: '100%', sm: 280, md: 350, lg: 700},
+                        cursor: 'pointer'
+                    }} 
+                ></Stack>
+            )
+        :   (
+                <Stack
+                    component='img'
+                    src={imagePreviewLink}
+                    alt={title}
+                    sx={{
+                        weight: {xs: '100%', sm: 250, md: 350, lg: 700},
+                        width: {xs: '100%', sm: 280, md: 350, lg: 700}
+                    }} 
+                ></Stack>
+            );
 
     const LessonButton = (
         <Button
             disabled={locked}
             variant='contained'
             size='medium'
+            onClick={startVideo}
             
             sx={{
                 flexGrow: 0,
@@ -142,7 +190,8 @@ const LessonCard = ({lesson, isLast }: LessonCardProps) => {
                     }
                 }}
             >
-                {LessonPreview}
+                {mediaBlock}
+                {/* {LessonPreview} */}
                 <Paper sx={{p: 2, display: 'flex', flexGrow: 1}} >
                     <Stack justifyContent='center' gap={2} flexGrow={1}>
                         {LessonIcon}

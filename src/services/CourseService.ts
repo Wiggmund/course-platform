@@ -10,6 +10,7 @@ interface Response {
 class CourseService {
     static coursesEndpoint = 'core/preview-courses';
     static coursePreviewLinkEnding = 'cover.webp';
+    static coursePreviewVideoEnding = 'preview.webp'
     static lessonPreviewLinkEnding = '.webp';
     static pagesCount: number = -1;
     static perPage = 10;
