@@ -30,6 +30,8 @@ const Home = () => {
         initialAuthentication();
     }, []);
 
+    
+
     return (
         <Container maxWidth="xl" sx={{p: 4}}>
             <HeaderContainer maxWidth="xl">

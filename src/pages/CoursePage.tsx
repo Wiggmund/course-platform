@@ -44,12 +44,9 @@ const CoursePage = () => {
         );
     }
 
-
     if (!course) {
         return <Typography variant='h4' textAlign='center'>There is no course with given id {id}</Typography>
     }
-
-
 
     const courseVideoPreviewElementId = course.id;
     const video = document.getElementById(courseVideoPreviewElementId) as HTMLMediaElement;
@@ -67,17 +64,15 @@ const CoursePage = () => {
             hls.attachMedia(video);
             hls.on(Hls.Events.MANIFEST_PARSED, function() {
                 console.log('Course preview video loaded')
-            }); 
+            });
+            hls.config.autoStartLoad = false;
         }
 
         const startVideo = () => {
-            hls.startLoad(-1);
-            video.play();
-        };
-
-        const stopVideo = () => {
-            hls.stopLoad();
-            video.pause();
+            if (video && hls) {
+                hls.startLoad(-1);
+                video.play();
+            }
         };
 
         coursePreview = (
@@ -95,8 +90,6 @@ const CoursePage = () => {
                 poster={imagePreviewLink}
 
                 onMouseOver={startVideo}
-                onMouseLeave={stopVideo}
-
                 sx={{cursor: 'pointer'}}
             ></Stack>
         );

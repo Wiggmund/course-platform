@@ -5,7 +5,7 @@ interface CourseDurationString {
 
 class Util {
     static getHoursAndMinutesFromMinutes(seconds: number): CourseDurationString {
-        const minutes = Math.ceil(seconds / 60);
+        const minutes = Math.ceil(seconds / 60)
         if (!minutes) {
             return {};
         }

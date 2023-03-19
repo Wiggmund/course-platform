@@ -106,11 +106,8 @@ const LessonCard = ({lesson, isLast }: LessonCardProps) => {
     const startVideo = () => {
         hls.startLoad(-1);
         video.play();
-    };
-
-    const stopVideo = () => {
-        hls.stopLoad();
-        video.pause();
+        video.muted = false;
+        
     };
 
     const mediaBlock = !locked
@@ -127,8 +124,6 @@ const LessonCard = ({lesson, isLast }: LessonCardProps) => {
                     muted
 
                     onPlay={startVideo}
-                    onMouseOver={startVideo}
-                    onMouseLeave={stopVideo}
 
                     sx={{
                         weight: {xs: '100%', sm: 250, md: 350, lg: 700},
