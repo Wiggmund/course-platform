@@ -4,7 +4,7 @@ export interface ILesson {
     duration: number;
     order: number;
     type: string;
-    status: string;
+    status: 'locked' | 'unlocked';
     link: string;
     previewImageLink: string;
     meta: null;

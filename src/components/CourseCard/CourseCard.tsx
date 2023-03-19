@@ -1,4 +1,4 @@
-import {ICourse} from "../../model";
+import {CourseResponseData, ICourse} from "../../model";
 import Card from '@mui/material/Card';
 import Typography from '@mui/material/Typography';
 import Button from "@mui/material/Button";
@@ -13,13 +13,14 @@ import { Link } from "react-router-dom";
 type CourseCardProps = Pick<ICourse, 'title' | 'description' | 'duration' | 'rating' | 'tags' | 'previewImageLink'>
 
 const CourseCard = ({
+    id,
     title,
     description,
     duration,
     rating,
     tags,
     previewImageLink
-}: CourseCardProps) => {
+}: CourseResponseData) => {
     const preview = `${previewImageLink}/cover.webp`;
     
 
@@ -36,7 +37,7 @@ const CourseCard = ({
                 },
             }}
         >
-            <Link to={'course/1'}>
+            <Link to={`course/${id}`}>
                 <Button variant='contained' size="small" color="primary"
                     sx={{
                         [MainTheme.breakpoints.down('xs')]: {
@@ -60,7 +61,15 @@ const CourseCard = ({
         </Box>
     );
 
-    const cardImage = (<Box component='img' src={preview} alt={title} height={'400px'}/>);
+    const cardImage = (
+        <Box 
+            component='img'
+            src={preview} 
+            alt={title} 
+            maxHeight={400}
+            minHeight={200}
+        />
+    );
 
     return (
         <Card

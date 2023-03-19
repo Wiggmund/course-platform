@@ -4,17 +4,54 @@ import Grid from "@mui/material/Grid";
 import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
 import { Duration, CourseInfo, CourseRating, CourseStatus, HashTags, LessonCard, SkillsBlock } from "../components";
-import { CourseList, LessonsList } from "../data";
 import { HeaderContainer, MainContainer } from "./Home";
 import IconButton from "@mui/material/IconButton";
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { MainTheme } from "../miu";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
+import { ICourse } from "../model";
+import { CourseService } from "../services";
+import {useEffect, useState} from 'react'
+import { Status } from "../components/CourseStatus/CourseStatus";
+import CircularProgress from '@mui/material/CircularProgress';
 
 const CoursePage = () => {
-    const course = CourseList[0];     
-    const link = course.previewImageLink + '/cover.webp';
-    const lessons = LessonsList;
+    const [course, setCourse] = useState<ICourse>();
+    const {id} = useParams<Pick<ICourse, 'id'>>();
+    const [loading, setLoading] = useState(false);
+    useEffect(() => {
+        async function getCourseById() {
+            if (id) {
+                setLoading(true);
+                const {data} = await CourseService.getCourseById(id);
+                setCourse(data);
+                setLoading(false);
+            }
+        }
+
+        getCourseById();
+    }, [id]);
+    
+
+    if (loading) {
+        return (
+            <Stack alignItems='center' justifyContent='center' height='100vh'>
+                <CircularProgress color="primary" />
+            </Stack>
+        );
+    }
+
+
+    if (!course) {
+        return <Typography variant='h1'>There is no course with given id {id}</Typography>
+    }
+    const {title, description, duration, rating, tags, lessons, previewImageLink, launchDate, meta} = course
+    const status = course.status === 'launched' ? Status.Launched : Status.Closed;
+
+    const coursePreview = previewImageLink
+        ? `${previewImageLink}/${CourseService.coursePreviewLinkEnding}`
+        : `${lessons[0].previewImageLink}/lesson-${lessons[0].order}${CourseService.lessonPreviewLinkEnding}`;
+    
     const lessonItems = lessons.map((lesson, index) => (
         <LessonCard key={lesson.id} lesson={lesson} isLast={index + 1 === lessons.length}/>
     ));
@@ -41,12 +78,12 @@ const CoursePage = () => {
                     />
                 </IconButton>
             </Link>
-            <CourseStatus />
+            <CourseStatus status={status}/>
         </Stack>
     );
 
     const headerTextContent = (
-        <Stack gap={4} p={2}>
+        <Stack gap={4} p={4}>
             {StatusBar}
             <Box>
                 <Typography
@@ -57,39 +94,41 @@ const CoursePage = () => {
                         }
                     }}
                 >
-                    {course.title}
+                    {title}
                 </Typography>
                 <Box marginTop={2}>
-                    <HashTags tags={course.tags}/>
+                    <HashTags tags={tags}/>
                 </Box>
 
                 <Stack gap={2} marginTop={2}>
                     <Stack direction='row' justifyContent='space-between'>
-                        <Duration duration={course.duration}/>
-                        <CourseRating rating={course.rating}/>
+                        <Duration duration={duration}/>
+                        <CourseRating rating={rating}/>
                     </Stack>
-                    <Typography variant='h5'>{course.description}</Typography>
+                    <Typography variant='h5'>{description}</Typography>
                 </Stack>
             </Box>
         </Stack>
     );
 
     return (
-        <Container maxWidth="xl">
+        <Container maxWidth="xl" sx={{p: 4}}>
             <HeaderContainer maxWidth="xl">
                 <Grid container alignItems='center'>
                     <Grid item xs={12} md={4}>
                         {headerTextContent}
                     </Grid>
                     <Grid item ss={12} md={8}>
-                        <Stack flexGrow={1}>
+                        <Stack
+                            alignItems='center'
+                            justifyContent='center'
+                        >
                             <Box 
-                                component='img' 
-                                src={link} 
-                                alt={course.title}
-                                sx={{
-                                    minHeight: {ss: 200, md: 350, lg: 500}
-                                }} 
+                                component='img'
+                                maxHeight='100%'
+                                maxWidth='100%'
+                                src={coursePreview} 
+                                alt={title}
                             /> 
                         </Stack>
                     </Grid>
@@ -102,11 +141,13 @@ const CoursePage = () => {
                     spacing={2}
                 >
                     <Grid item xs={12} md={6}>
-                        <CourseInfo launchDate={course.launchDate} lessonsCount={course.lessonsCount}/>
+                        <CourseInfo launchDate={launchDate} lessonsCount={lessons.length}/>
                     </Grid>
-                    <Grid item xs={12} md={6}>
-                        <SkillsBlock skills={course.meta.skills!}/>
-                    </Grid>
+                    {meta.skills &&
+                        <Grid item xs={12} md={6}>
+                            <SkillsBlock skills={meta.skills}/>
+                        </Grid>
+                    }
                 </Grid>
                 <Stack gap={4} marginTop={2}>
                     <Typography variant='h3'>Course program</Typography>

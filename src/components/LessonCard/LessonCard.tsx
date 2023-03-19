@@ -8,8 +8,7 @@ import Duration from "../Duration/Duration";
 import { ILesson } from "../../model";
 import Paper from "@mui/material/Paper";
 import {MainTheme} from "../../miu";
-import {useState} from 'react';
-
+import { CourseService } from "../../services";
 
 interface LessonCardProps {
     lesson: ILesson,
@@ -18,9 +17,9 @@ interface LessonCardProps {
 
 
 const LessonCard = ({lesson, isLast }: LessonCardProps) => {
-    const {title, previewImageLink: link, duration, order, status} = lesson;
-    const [locked, setLocked] = useState(status);
-
+    const {title, duration, order, status} = lesson;
+    const link = `${lesson.previewImageLink}/lesson-${order}${CourseService.lessonPreviewLinkEnding}`;
+    const locked = status === 'locked' ? true : false;
 
     const LessonTitle = (
         <Typography component='div' >
@@ -90,19 +89,22 @@ const LessonCard = ({lesson, isLast }: LessonCardProps) => {
     );
 
     const LessonPreview = (
-        <Box 
-            component='img' 
+        <Stack 
+            component='img'
+            maxHeight='100%'
+            maxWidth='100%'
             src={link} 
             alt={title}
             sx={{
-                minHeight: {xs: 100, md: 350, lg: 500}
+                weight: {xs: '100%', sm: 250, md: 350, lg: 700},
+                width: {xs: '100%', sm: 280, md: 350, lg: 700}
             }} 
-        /> 
+        ></Stack> 
     );
 
     const LessonButton = (
         <Button
-            disabled 
+            disabled={locked}
             variant='contained'
             size='medium'
             

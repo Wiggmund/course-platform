@@ -10,12 +10,14 @@ import Container from "@mui/material/Container";
 
 
 export const HeaderContainer = styled(Container)({
-    component: "header"
+    component: "header",
+    p: 4
 });
 
 export const MainContainer = styled(Container)({
     component: "main",
-    marginTop: '40px'
+    marginTop: '40px',
+    p: 4
 });
 
 
