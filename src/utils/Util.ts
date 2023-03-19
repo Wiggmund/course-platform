@@ -5,8 +5,6 @@ interface CourseDurationString {
 
 class Util {
     static getHoursAndMinutesFromMinutes(minutes: number): CourseDurationString {
-
-        
         if (!minutes) {
             return {};
         }
@@ -22,6 +20,12 @@ class Util {
             hours: hours ? hourStringNotation : undefined,
             minutes: leftMinutes ? minuteStringNotation : undefined
         }
+    }
+
+    static getNumberRange(from: number, to: number): number[] {
+        const result = [];
+        for (let i = from; i <= to; i++) result.push(i);
+        return result;
     }
 }
 

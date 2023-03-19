@@ -6,21 +6,26 @@ import Typography from "@mui/material/Typography/Typography";
 import { CourseService } from "../../services";
 import CircularProgress from '@mui/material/CircularProgress';
 import Stack from '@mui/material/Stack';
+import { Pagination } from '@mui/material';
 
 const CourseCardList = () => {
-    const [courseList, setCourseList] = useState<CourseResponseData[]>([]);
+    const [page, setPage] = useState(1);
+    const [pageQty, setPageQty] = useState(0);
     const [loading, setLoading] = useState(false);
+    const [courseList, setCourseList] = useState<CourseResponseData[]>([]);
 
     useEffect(() => {
         async function loadCourseList() {
             setLoading(true);
-            const {data} = await CourseService.getAllCourses();
-            setCourseList(data.courses.slice(0, 15));
+            const courses = await CourseService.getAllCourses(page);
+            setCourseList(courses);
+            setPageQty(CourseService.pagesCount);
             setLoading(false);
         }
 
         loadCourseList();
-    }, []);
+    }, [page]);
+
 
     if (loading) {
         return (
@@ -41,6 +46,19 @@ const CourseCardList = () => {
                     <CourseCard {...course} />
                 </Grid>
             ))}
+            {pageQty !== 0 &&
+                <Grid item ss={12}>
+                    <Stack alignItems='center' justifyContent='center'>
+                        <Pagination
+                            count={pageQty}
+                            page={page}
+                            onChange={(_, newPage) => setPage(newPage)}
+                            showFirstButton
+                            showLastButton
+                        />
+                    </Stack>
+                </Grid>
+            }
         </Grid>
     );
 };

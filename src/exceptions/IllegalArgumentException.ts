@@ -1,7 +1,6 @@
 class IllegalArgumentException extends Error {
-    constructor(funName: string, expected?: string, got?: string) {
-        super(`Was passed wrong argument to ${funName}
-            ${expected && got ? `\n\t[Expected: ${expected}\tGot:${got}]` : ''}`);
+    constructor(functionName: string) {
+        super(`Illegal argument exception for ${functionName} function`);
     }
 }
 
