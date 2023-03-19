@@ -31,7 +31,7 @@ const Home = () => {
     }, []);
 
     return (
-        <Container maxWidth="xl">
+        <Container maxWidth="xl" sx={{p: 4}}>
             <HeaderContainer maxWidth="xl">
                 <Stack spacing={3} marginBottom={4}>
                     <Logo />

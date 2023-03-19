@@ -43,7 +43,7 @@ const CoursePage = () => {
 
 
     if (!course) {
-        return <Typography variant='h1'>There is no course with given id {id}</Typography>
+        return <Typography variant='h4' textAlign='center'>There is no course with given id {id}</Typography>
     }
     const {title, description, duration, rating, tags, lessons, previewImageLink, launchDate, meta} = course
     const status = course.status === 'launched' ? Status.Launched : Status.Closed;
@@ -52,6 +52,7 @@ const CoursePage = () => {
         ? `${previewImageLink}/${CourseService.coursePreviewLinkEnding}`
         : `${lessons[0].previewImageLink}/lesson-${lessons[0].order}${CourseService.lessonPreviewLinkEnding}`;
     
+    lessons.sort((a, b) => a.order - b.order);
     const lessonItems = lessons.map((lesson, index) => (
         <LessonCard key={lesson.id} lesson={lesson} isLast={index + 1 === lessons.length}/>
     ));
