@@ -1,12 +1,24 @@
 import { createEntityAdapter, createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { LoadingStatus } from '../constants';
 import { CourseResponseData } from '../model';
-import { CourseService } from '../services';
+import { CourseService, FilterOptions } from '../services';
 import { RootState } from './store';
 
 export const fetchCourses = createAsyncThunk('courses/fetchCourses', async (page: number) => {
 	return await CourseService.getAllCourses(page);
 });
+
+interface fetchFilteredCoursesArgs {
+	page: number;
+	filter: FilterOptions;
+}
+
+export const fetchFilteredCourses = createAsyncThunk(
+	'courses/fetchFilteredCourses',
+	async ({ page, filter }: fetchFilteredCoursesArgs) => {
+		return await CourseService.getFilteredCourses(page, filter);
+	}
+);
 
 const coursesAdapter = createEntityAdapter<CourseResponseData>({
 	sortComparer: (a, b) => Number(a.rating) - Number(b.rating)
@@ -16,6 +28,8 @@ const coursesSlice = createSlice({
 	name: 'courses',
 	initialState: coursesAdapter.getInitialState({
 		coursesList: [] as CourseResponseData[],
+		isFiltered: false,
+		allFilteredCourses: [] as CourseResponseData[],
 		currentPage: 1,
 		tags: [] as string[],
 		pagesQty: 1,
@@ -35,6 +49,7 @@ const coursesSlice = createSlice({
 				state.currentPage = currentPage;
 				state.pagesQty = pagesQty;
 				state.coursesList = allCourses;
+				state.isFiltered = false;
 
 				const uniqueTags: string[] = [];
 				allCourses
@@ -47,6 +62,26 @@ const coursesSlice = createSlice({
 				coursesAdapter.setAll(state, coursesPerPage);
 			})
 			.addCase(fetchCourses.rejected, (state) => {
+				state.status = LoadingStatus.Failed;
+			})
+
+			.addCase(fetchFilteredCourses.pending, (state) => {
+				state.status = LoadingStatus.Loading;
+			})
+			.addCase(fetchFilteredCourses.fulfilled, (state, action) => {
+				const { coursesPerPage, pagesQty, currentPage, allCourses, filteredCourses } =
+					action.payload;
+
+				state.status = LoadingStatus.Succeed;
+				state.isFiltered = true;
+				state.currentPage = currentPage;
+				state.pagesQty = pagesQty;
+				state.coursesList = allCourses;
+				state.allFilteredCourses = filteredCourses;
+
+				coursesAdapter.setAll(state, coursesPerPage);
+			})
+			.addCase(fetchFilteredCourses.rejected, (state) => {
 				state.status = LoadingStatus.Failed;
 			});
 	}

@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { AuthService } from '../services';
 import { Logo, SearchPanel, HashTags, CourseCardList } from '../components';
 import { CircularProgress, Pagination, Stack, styled } from '@mui/material';
@@ -11,7 +11,8 @@ import {
 	selectPagesQty,
 	useAppDispatch,
 	useAppSelector,
-	fetchCourses
+	fetchCourses,
+	fetchFilteredCourses
 } from '../redux';
 import { LoadingStatus } from '../constants';
 import { RequestError } from '../exceptions';
@@ -34,6 +35,8 @@ const Home = () => {
 	const pagesQty = useAppSelector(selectPagesQty);
 	const loadingStatus = useAppSelector(selectLoadingStatus);
 	const currentPage = useAppSelector(selectCurrentPage);
+	const isFiltered = useAppSelector((state) => state.courses.isFiltered);
+	const [filterValue, setFilterValue] = useState('');
 
 	useEffect(() => {
 		async function initialAuthentication() {
@@ -61,13 +64,22 @@ const Home = () => {
 		);
 	}
 
+	const onSearch = (inputValue: string) => {
+		if (inputValue.trim() !== '') {
+			setFilterValue(inputValue);
+			dispatch(fetchFilteredCourses({ page: 1, filter: { title: inputValue } }));
+		} else {
+			dispatch(fetchCourses(currentPage));
+		}
+	};
+
 	return (
 		<Container maxWidth="xl" sx={{ p: 4 }}>
 			<HeaderContainer maxWidth="xl">
 				<Stack spacing={3} marginBottom={4}>
 					<Logo />
 					<HashTags tags={hashTags} />
-					<SearchPanel />
+					<SearchPanel onSearch={onSearch} value={filterValue} />
 				</Stack>
 			</HeaderContainer>
 			<MainContainer maxWidth="xl">
@@ -76,7 +88,16 @@ const Home = () => {
 					<Pagination
 						count={pagesQty}
 						page={currentPage}
-						onChange={(_, newPage) => dispatch(fetchCourses(newPage))}
+						onChange={(_, newPage) =>
+							isFiltered
+								? dispatch(
+										fetchFilteredCourses({
+											page: newPage,
+											filter: { title: filterValue }
+										})
+								  )
+								: dispatch(fetchCourses(newPage))
+						}
 						showFirstButton
 						showLastButton
 					/>

@@ -9,5 +9,6 @@ export {
 	selectLoadingStatus,
 	selectAllCourses,
 	selectCurrentPage,
-	fetchCourses
+	fetchCourses,
+	fetchFilteredCourses
 } from './coursesSlice';

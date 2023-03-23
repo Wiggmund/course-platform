@@ -5,17 +5,17 @@
 ### Need to use Redux **(COMPLETED)**
 1. Use asyncThunks for fetching and updating state
 
-### Code quality
+### Code quality **(COMPLETED)**
 1. More strict eslint config + Prettier
 2. Test react components (React Testing library)
 3. Test fetching data (Jest)
 
 ## `Missed functionality`
-### Search
+### Search **(COMPLETED)**
 1. Make SearchPanel a Controlled Component
 2. After enter button or search icon was pressed we make request, filter and then update state:
 
-### Complete pagination
+### Complete pagination **(COMPLETED)**
 1. When we come back from CoursePage to HomePage we have to be on the page which we were
 2. We can use React-Router and pass query parameter with current page
 
