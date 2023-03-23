@@ -1,4 +1,3 @@
-import {CourseResponseData, ICourse} from "../../model";
 import Card from '@mui/material/Card';
 import Typography from '@mui/material/Typography';
 import Button from "@mui/material/Button";
@@ -9,18 +8,25 @@ import CourseRating from "../CourseRating/CourseRating";
 import {MainTheme} from "../../miu";
 import HashTags from "../HashTags/HashTags";
 import { Link } from "react-router-dom";
+import {EntityId} from '@reduxjs/toolkit';
+import { selectCourseById, useAppSelector } from "../../redux";
+import { InternalServerError } from "../../exceptions";
 
-type CourseCardProps = Pick<ICourse, 'title' | 'description' | 'duration' | 'rating' | 'tags' | 'previewImageLink'>
+interface CourseCardProps {
+    courseId: EntityId
+}
 
 const CourseCard = ({
-    id,
-    title,
-    description,
-    duration,
-    rating,
-    tags,
-    previewImageLink
-}: CourseResponseData) => {
+    courseId
+}: CourseCardProps) => {
+    const course = useAppSelector(state => selectCourseById(state, courseId));
+
+    if (!course) {
+        throw new InternalServerError('Not valid courseId in the state');
+    }
+    
+    const {id, previewImageLink, duration, description, rating, tags, title} = course;
+    
     const preview = `${previewImageLink}/cover.webp`;
     
 
@@ -37,7 +43,7 @@ const CourseCard = ({
                 },
             }}
         >
-            <Link to={`course/${id}`}>
+            <Link to={`course/${id}`} >
                 <Button variant='contained' size="small" color="primary"
                     sx={{
                         [MainTheme.breakpoints.down('xs')]: {

@@ -7,6 +7,13 @@ interface Response {
     courses: CourseResponseData[]
 }
 
+export interface GetAllCoursesResponse {
+    currentPage: number;
+    pagesQty: number;
+    coursesPerPage: CourseResponseData[];
+    allCourses: CourseResponseData[];
+}
+
 class CourseService {
     static coursesEndpoint = 'core/preview-courses';
     static coursePreviewLinkEnding = 'cover.webp';
@@ -16,7 +23,7 @@ class CourseService {
     static perPage = 10;
     static coursesList: CourseResponseData[];
 
-    static async getAllCourses(page: number): Promise<CourseResponseData[]> {
+    static async getAllCourses(page: number): Promise<GetAllCoursesResponse> {
         const perPage = CourseService.perPage;
         const response = await $api.get<Response>(CourseService.coursesEndpoint);
         const courses = response.data.courses;
@@ -30,7 +37,13 @@ class CourseService {
             throw new IllegalArgumentException('getAllCourses');
         }
 
-        return coursesByPage.get(page) || [];
+        return {
+            currentPage: page,
+            pagesQty: CourseService.pagesCount,
+            coursesPerPage: coursesByPage.get(page) || [],
+            allCourses: courses
+        }
+        
 
         function splitCoursesByPage() {
             let to = perPage;
@@ -52,6 +65,7 @@ class CourseService {
             }
         }
     }
+
 
     static async getCourseById(courseId: string): Promise<AxiosResponse<ICourse>> {
         return await $api.get<ICourse>(`${CourseService.coursesEndpoint}/${courseId}`);

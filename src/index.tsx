@@ -7,16 +7,20 @@ import {MainTheme} from './miu';
 import CssBaseline from '@mui/material/CssBaseline';
 import { RouterProvider } from 'react-router-dom';
 import {RootRouter} from './routes'
+import {Provider} from 'react-redux'
+import { RootStore } from './redux';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
 root.render(
   <React.StrictMode>
-      <CssBaseline />
-      <ThemeProvider theme={MainTheme}>
-        <RouterProvider router={RootRouter} />
-      </ThemeProvider>
+      <Provider store={RootStore}>
+        <CssBaseline />
+        <ThemeProvider theme={MainTheme}>
+          <RouterProvider router={RootRouter} />
+        </ThemeProvider>
+      </Provider>
   </React.StrictMode>
 );
 

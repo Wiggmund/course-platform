@@ -1,10 +1,10 @@
+import React from "react";
 import { Autocomplete, AutocompleteRenderInputParams, createFilterOptions } from "@mui/material";
 import InputAdornment from "@mui/material/InputAdornment";
 import TextField from "@mui/material/TextField";
 import Search from '@mui/icons-material/Search';
 import { CourseResponseData } from "../../model/Course";
-import React from "react";
-import { CourseService } from "../../services";
+import { selectAllCourses, useAppSelector } from "../../redux";
 
 const SearchPanel = () => {
     const filterOptions = createFilterOptions({
@@ -35,12 +35,13 @@ const SearchPanel = () => {
         return option.title;
     };
 
-    const courses = CourseService.coursesList || [];
+    const courses = useAppSelector(selectAllCourses);
+
     const searchInput = <Autocomplete
         freeSolo
         id="search-panel"
         disableClearable
-        options={courses.sort((a, b) => -b.title.charAt(0).localeCompare(a.title.charAt(0)))}
+        options={courses.slice().sort((a, b) => -b.title.charAt(0).localeCompare(a.title.charAt(0)))}
         getOptionLabel={getOptionLabel}
         groupBy={(option) => option.title.charAt(0)}
         filterOptions={filterOptions}

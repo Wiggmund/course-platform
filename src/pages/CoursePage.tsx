@@ -15,11 +15,12 @@ import {useEffect, useState} from 'react'
 import { Status } from "../components/CourseStatus/CourseStatus";
 import CircularProgress from '@mui/material/CircularProgress';
 import Hls from "hls.js";
+import { InternalServerError } from "../exceptions";
 
 const CoursePage = () => {
     const [course, setCourse] = useState<ICourse>();
     const {id} = useParams<Pick<ICourse, 'id'>>();
-    const [loading, setLoading] = useState(false);
+    const [loading, setLoading] = useState(true);
     let hls: Hls;
 
     useEffect(() => {
@@ -45,7 +46,7 @@ const CoursePage = () => {
     }
 
     if (!course) {
-        return <Typography variant='h4' textAlign='center'>There is no course with given id {id}</Typography>
+        throw new InternalServerError("Invalid courseId for routing to CoursePage");
     }
 
     const courseVideoPreviewElementId = course.id;
@@ -114,7 +115,6 @@ const CoursePage = () => {
     const lessonItems = lessons.map((lesson, index) => (
         <LessonCard key={lesson.id} lesson={lesson} isLast={index + 1 === lessons.length}/>
     ));
-
 
     const StatusBar = (
         <Stack 

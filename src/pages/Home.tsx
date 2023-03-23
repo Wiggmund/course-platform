@@ -1,12 +1,15 @@
 import { useEffect } from "react";
-import {AuthService, CourseService} from "../services";
+import {AuthService} from "../services";
 import {Logo} from "../components";
 import {SearchPanel} from "../components";
 import {HashTags} from "../components";
 import {CourseCardList} from "../components";
-import { Stack, styled } from "@mui/material";
+import { CircularProgress, Pagination, Stack, styled } from "@mui/material";
 import Container from "@mui/material/Container";
-import {useState} from 'react';
+import { selectAllTags, selectCoursesPerPageIds, selectCurrentPage, selectLoadingStatus, selectPagesQty, useAppDispatch, useAppSelector } from "../redux";
+import { fetchCourses } from "../redux";
+import { LoadingStatus } from "../constants";
+import { RequestError } from "../exceptions";
 
 export const HeaderContainer = styled(Container)({
     component: "header",
@@ -21,35 +24,66 @@ export const MainContainer = styled(Container)({
 
 
 const Home = () => {
-    const [tags, setTags] = useState<string[]>([]);
+    const dispatch = useAppDispatch();
+    const coursesIds = useAppSelector(selectCoursesPerPageIds);
+    const hashTags = useAppSelector(selectAllTags);
+    const pagesQty = useAppSelector(selectPagesQty);
+    const loadingStatus = useAppSelector(selectLoadingStatus);
+    const currentPage = useAppSelector(selectCurrentPage);
 
     useEffect(() => {
         async function initialAuthentication() {
             await AuthService.checkAuth();
         }
-
-        async function loadData() {
-            await CourseService.getAllCourses(1);
-            setTags(CourseService.getAllHashtags());
-        }
-
         initialAuthentication();
-        loadData();
-    }, []);
+        
+        if (loadingStatus === LoadingStatus.Idle) {
+            dispatch(fetchCourses(currentPage));
+        }
+    }, [dispatch, currentPage, loadingStatus]);
 
+    if (loadingStatus === LoadingStatus.Failed) {
+        throw new RequestError("Failed to fetch courses from the server"); 
+    }
 
+    if (loadingStatus === LoadingStatus.Loading) {
+        return (
+            <Stack
+                gap={3}
+                height='100vh'
+            >
+                <Logo />
+                <Stack
+                    height='100%'
+                    justifyContent='center'
+                    alignItems='center'
+                >
+                    <CircularProgress color="primary" size='3em'/>
+                </Stack>
+            </Stack>
+        );
+    }
 
     return (
         <Container maxWidth="xl" sx={{p: 4}}>
             <HeaderContainer maxWidth="xl">
                 <Stack spacing={3} marginBottom={4}>
                     <Logo />
-                    <HashTags tags={tags}/>
+                    <HashTags tags={hashTags}/>
                     <SearchPanel />
                 </Stack>
             </HeaderContainer>
             <MainContainer maxWidth="xl">
-                <CourseCardList />
+                <CourseCardList coursesIds={coursesIds}/>
+                <Stack alignItems='center' justifyContent='center' marginTop={4}>
+                        <Pagination
+                            count={pagesQty}
+                            page={currentPage}
+                            onChange={(_, newPage) => dispatch(fetchCourses(newPage))}
+                            showFirstButton
+                            showLastButton
+                        />
+                    </Stack>
             </MainContainer>
         </Container>
     );
