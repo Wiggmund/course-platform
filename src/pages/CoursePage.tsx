@@ -23,7 +23,7 @@ import { useEffect, useState } from 'react';
 import { Status } from '../components/CourseStatus/CourseStatus';
 import CircularProgress from '@mui/material/CircularProgress';
 import Hls from 'hls.js';
-import { InternalServerError } from '../exceptions';
+import { InternalServerError, RequestError } from '../exceptions';
 
 const CoursePage = () => {
 	const [course, setCourse] = useState<ICourse>();
@@ -35,8 +35,12 @@ const CoursePage = () => {
 		async function getCourseById() {
 			if (id) {
 				setLoading(true);
-				const { data } = await CourseService.getCourseById(id);
-				setCourse(data);
+				const response = await CourseService.getCourseById(id);
+				if (!response) {
+					setLoading(false);
+					throw new RequestError('Failed to fetch course');
+				}
+				setCourse(response.data);
 				setLoading(false);
 			}
 		}
