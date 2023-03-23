@@ -1,8 +1,8 @@
-## `Further improvements`
-### Move course list and fetching data to the HomePage
+## `Further improvements **WHAT WAS DONE**`
+### Move course list and fetching data to the HomePage **(COMPLETED)**
 1.  Fetching data in the HomePage, and pass current course list to the CourseCardList component. Accordingly, move the pagination and the loading indicator from CourseCardList to the HomePage.
 
-### Need to use Redux
+### Need to use Redux **(COMPLETED)**
 1. Use asyncThunks for fetching and updating state
 
 ### Code quality
