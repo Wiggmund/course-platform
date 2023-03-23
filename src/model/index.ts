@@ -1,2 +1,2 @@
-export type {ICourse, CourseResponseData} from './Course';
-export type {ILesson} from './Lesson';
+export type { ICourse, CourseResponseData } from './Course';
+export type { ILesson } from './Lesson';

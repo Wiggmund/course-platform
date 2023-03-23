@@ -1,40 +1,37 @@
-import {ILesson} from "./Lesson";
+import { ILesson } from './Lesson';
 
 export interface ICourse {
-    id: string;
-    title: string;
-    tags: string[];
-    launchDate: string;
-    status: string;
-    description: string;
-    duration: number;
-    previewImageLink: string;
-    rating: number;
+	id: string;
+	title: string;
+	tags: string[];
+	launchDate: string;
+	status: string;
+	description: string;
+	duration: number;
+	previewImageLink: string;
+	rating: number;
 
-    meta: IMetaInformation;
+	meta: IMetaInformation;
 
-    lessons: ILesson[];
+	lessons: ILesson[];
 
-    containsLockedLessons: boolean;
+	containsLockedLessons: boolean;
 }
 
 interface IMetaInformation {
-    slug: string;
-    skills?: string[];
-    courseVideoPreview?: ICourseVideoPreview;
-    fullCourseProductId?: string;
-    fullCourseProductFamily?: string;
+	slug: string;
+	skills?: string[];
+	courseVideoPreview?: ICourseVideoPreview;
+	fullCourseProductId?: string;
+	fullCourseProductFamily?: string;
 }
 
 interface ICourseVideoPreview {
-    link: string;
-    duration: number;
-    previewImageLink: string;
+	link: string;
+	duration: number;
+	previewImageLink: string;
 }
 
-export type CourseResponseData = Omit<ICourse, "lessons"> & {
-    lessonsCount: number;
+export type CourseResponseData = Omit<ICourse, 'lessons'> & {
+	lessonsCount: number;
 };
-
-
-

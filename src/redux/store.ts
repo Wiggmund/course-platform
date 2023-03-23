@@ -1,10 +1,10 @@
-import {configureStore} from '@reduxjs/toolkit'
+import { configureStore } from '@reduxjs/toolkit';
 import CoursesReducer from './coursesSlice';
 
 const store = configureStore({
-    reducer: {
-        courses: CoursesReducer
-    }
+	reducer: {
+		courses: CoursesReducer
+	}
 });
 
 export type RootState = ReturnType<typeof store.getState>;

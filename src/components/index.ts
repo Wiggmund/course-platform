@@ -1,12 +1,11 @@
-export {default as SearchPanel} from './SearchPanel/SearchPanel'
-export {default as Logo} from './Logo/Logo'
-export {default as HashTags} from './HashTags/HashTags'
-export {default as CourseRating} from './CourseRating/CourseRating'
-export {default as CourseCardList} from './CourseCardList/CourseCardList'
-export {default as Duration} from './Duration/Duration'
-export {default as CourseCard} from './CourseCard/CourseCard'
-export {default as CourseStatus} from './CourseStatus/CourseStatus'
-export {default as CourseInfo} from './CourseInfo/CourseInfo'
-export {default as SkillsBlock} from './SkillsBlock/SkillsBlock'
-export {default as LessonCard} from './LessonCard/LessonCard'
-export {default as Video} from './Video/Video'
+export { default as SearchPanel } from './SearchPanel/SearchPanel';
+export { default as Logo } from './Logo/Logo';
+export { default as HashTags } from './HashTags/HashTags';
+export { default as CourseRating } from './CourseRating/CourseRating';
+export { default as CourseCardList } from './CourseCardList/CourseCardList';
+export { default as Duration } from './Duration/Duration';
+export { default as CourseCard } from './CourseCard/CourseCard';
+export { default as CourseStatus } from './CourseStatus/CourseStatus';
+export { default as CourseInfo } from './CourseInfo/CourseInfo';
+export { default as SkillsBlock } from './SkillsBlock/SkillsBlock';
+export { default as LessonCard } from './LessonCard/LessonCard';
