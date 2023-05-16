@@ -5,8 +5,8 @@
 ### Need to use Redux **(COMPLETED)**
 1. Use asyncThunks for fetching and updating state
 
-### Code quality **(COMPLETED)**
-1. More strict eslint config + Prettier
+### Code quality
+1. More strict eslint config + Prettier **(COMPLETED)**
 2. Test react components (React Testing library)
 3. Test fetching data (Jest)
 
